@@ -126,7 +126,7 @@ async def startup_event():
     print("FastAPI server is starting...")
     tts_models['htr'] = initialize_tts(TTSConfig(model_name='htr_adapt_20250414_v2', steps='40000', speaker_id='htr'))
     tts_models['krw'] = initialize_tts(TTSConfig(model_name='krw_model_v1', steps='707000', speaker_id='krw'))
-    tts_models['pds_announcer'] = initialize_tts(TTSConfig(model_name='pds_a_revised_20250818', steps='258000', speaker_id='pds_announcer'))
+    tts_models['pds_announcer'] = initialize_tts(TTSConfig(model_name='pds_a_pron_20250917', steps='101000', speaker_id='pds_announcer'))
     tts_models['pds_natural'] = initialize_tts(TTSConfig(model_name='pds_ms_revised_20250818', steps='179000', speaker_id='pds_natural'))
 
 @app.post("/tts")
@@ -171,4 +171,12 @@ source /database/venv/melotts/bin/activate
 
 nohup uvicorn tts_server:app --host 0.0.0.0 --port 7009 > server.log 2>&1 &
 curl -X POST "http://127.0.0.1:7009/tts" -H "Content-Type: application/json" -d @test2.json -o output.wav
+
+curl -X POST "http://127.0.0.1:7009/tts" -H "Content-Type: application/json" -d @test2.json -o output.wav
+
+curl -X POST "http://127.0.0.1:7009/tts" -H "Content-Type: application/json" -d @hxr1.json -o hxr_audio1.wav
+
+curl -X POST "http://127.0.0.1:7009/tts" -H "Content-Type: application/json" -d @hxr2.json -o hxr_audio2_natural.wav
+curl -X POST "http://127.0.0.1:7009/tts" -H "Content-Type: application/json" -d @hxr3.json -o hxr_audio3.wav
+curl -X POST "http://127.0.0.1:7009/tts" -H "Content-Type: application/json" -d @hxr4.json -o hxr_audio4.wav
 '''
